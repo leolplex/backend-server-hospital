@@ -10,8 +10,11 @@
   "author": "Daniel Romero",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "express": "^4.16.4",
-    "mongoose": "^5.5.5"
+    "mongoose": "^5.5.5",
+    "mongoose-unique-validator": "^2.0.3"
   },
   "devDependencies": {
     "nodemon": "^1.19.0"
