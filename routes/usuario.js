@@ -1,6 +1,8 @@
 // Requires
 var express = require('express');
 var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+var SEED = require('../config/config').SEED;
 
 // Inicializar variables
 var app = express();
@@ -10,7 +12,7 @@ var Usuario = require('../models/usuario');
 // Obetener todos los usuarios
 // ================================
 
-app.get('/', function(req, res) {
+app.get('/', function(req, res, next) {
   Usuario.find({}, 'nombre correo img role').exec((err, usuarios) => {
     if (err) {
       return res.status(500).json({
@@ -25,6 +27,24 @@ app.get('/', function(req, res) {
       usuarios: usuarios
     });
   });
+});
+
+// ================================
+// Verificar token
+// ================================
+app.use('/', (req, res, next) => {
+  var token = req.query.token;
+  jwt.verify(token, SEED, (err,decoded)=>{
+    if (err) {
+      return res.status(401).json({
+        ok: false,
+        mensaje: 'Token incorrecto',
+        errors: err
+      });
+    }
+    next();
+  });
+
 });
 
 // ================================
