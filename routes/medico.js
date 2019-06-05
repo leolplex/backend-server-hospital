@@ -11,20 +11,31 @@ var Medico = require('../models/medico');
 // ================================
 
 app.get('/', function(req, res, next) {
-  Medico.find({}, 'nombre img usuario hospital').exec((err, medicos) => {
-    if (err) {
-      return res.status(500).json({
-        ok: false,
-        mensaje: 'Error cargando medicos',
-        errors: err
-      });
-    }
+  var desde = req.query.desde || 0;
+  desde = Number(desde);
 
-    res.status(200).json({
-      ok: true,
-      medicos: medicos
+  Medico.find({})
+    .skip(desde)
+    .limit(5)
+    .populate('usuario', 'nombre correo')
+    .populate('hospital')
+    .exec((err, medicos) => {
+      if (err) {
+        return res.status(500).json({
+          ok: false,
+          mensaje: 'Error cargando medicos',
+          errors: err
+        });
+      }
+
+      Medico.count({}, (err, conteo) => {
+        res.status(200).json({
+          ok: true,
+          medicos: medicos,
+          total: conteo
+        });
+      });
     });
-  });
 });
 
 // ================================
@@ -54,7 +65,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     medico.nombre = body.nombre;
     medico.usuario = req.usuario._id;
-    medico.hospital = body.hospital._id;
+    medico.hospital = body.hospital;
 
     medico.save((err, medicoGuardado) => {
       if (err) {
@@ -83,7 +94,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
     nombre: body.nombre,
     img: body.img,
     usuario: req.usuario._id,
-    hospital: body.hospital._id
+    hospital: body.hospital
   });
 
   medico.save((err, medicoGuardado) => {
