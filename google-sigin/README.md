@@ -1,8 +1,9 @@
 # Google-SigIn
 
-Esta carpeta contiene un pequeño front-end para obtener el token de Google y probarlo contra nuestro backend server.
 
-Recuerden que es necesario reconstruir los módulos de node, en caso de que se quiera probar localment
+This folder contains a small front-end to get the Google token and test it against our backend server.
+
+Remember that it is necessary to rebuild the node modules, in case you want to test locally
 
 ```
 npm install

@@ -1,12 +1,14 @@
 # Backend-Server
 
-Este es el código necesario para establecer el backend conectadp a MongoDB usando Mongoose.
 
-Para ejecutarlo, es necesario reconstruir los módulos de node usando el comando
+This is the code needed to set the backend connected to MongoDB using Mongoose.
+
+To execute it, it is necessary to rebuild the node modules using the command
 
 ```
 npm install
 ```
 
 ## Dentro de Google-Sigin
-Existe un pequeño ejercicio para probar la auntentación de Google en un front-end báscio pero funcional.
+
+There is a small exercise to test the reliability of Google in a basic but functional front-end.
