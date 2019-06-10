@@ -44,7 +44,7 @@ app.post('/google', async (req, res) => {
     });
   });
 
-  Usuario.findOne({ correo: googleUser.email }, (err, usuarioBD) => {
+  Usuario.findOne({ correo: googleUser.correo }, (err, usuarioBD) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -60,15 +60,15 @@ app.post('/google', async (req, res) => {
           mensaje: 'Debe de usar su autenticación normal'
         });
       } else {
-        var token = jwt.sign({ usuario: usuarioDB }, SEED, {
+        var token = jwt.sign({ usuario: usuarioBD }, SEED, {
           expiresIn: 14400
         });
 
         res.status(200).json({
           ok: true,
-          usuario: usuarioDB,
+          usuario: usuarioBD,
           token: token,
-          id: usuarioDB._id
+          id: usuarioBD._id
         });
       }
     } else {
@@ -93,7 +93,7 @@ app.post('/google', async (req, res) => {
         });
       });
     }
-  });  
+  });
 });
 
 // =================================
