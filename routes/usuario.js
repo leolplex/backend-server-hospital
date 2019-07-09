@@ -17,7 +17,7 @@ app.get('/', function(req, res, next) {
   var desde = req.query.desde || 0;
   desde = Number(desde);
 
-  Usuario.find({}, 'nombre correo img role')
+  Usuario.find({}, 'nombre correo img role google')
     .skip(desde)
     .limit(5)
     .exec((err, usuarios) => {
